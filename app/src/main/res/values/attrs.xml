@@ -3,4 +3,11 @@
 
     <attr name="cornerRadius" format="dimension"/>
 
+    <declare-styleable name="BonitaCircleDisplay">
+        <attr name="size" format="dimension"/>
+        <attr name="maxWidth" format="dimension"/>
+        <attr name="source" format="reference"/>
+    </declare-styleable>
+
+
 </resources>

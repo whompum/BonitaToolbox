@@ -3,4 +3,6 @@
 
     <dimen name="cornerRadius">15dp</dimen>
 
+    <fraction name="maxWidth">60%</fraction>
+
 </resources>
