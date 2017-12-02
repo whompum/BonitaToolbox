@@ -52,7 +52,7 @@ public class BonitaShapeDrawable extends ShapeDrawable {
 
         @Override
         public Shader resize(int i, int i1) {
-            Log.i(DEBUG, "RESIZE SHADER FACTORY NIGGA");
+            Log.i(DEBUG, "RESIZE SHADER FACTORY");
             BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
 
             shader.setLocalMatrix(matrix);
