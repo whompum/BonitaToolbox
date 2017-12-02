@@ -5,8 +5,25 @@
 
     <declare-styleable name="BonitaCircleDisplay">
         <attr name="size" format="dimension"/>
+        <attr name="maxSize" format="dimension"/>
+        <attr name="circleSourceImage" format="reference"/>
+        <attr name="cropRegion">
+            <enum name="START" value="0"/>
+            <enum name="CENTER" value="1"/>
+            <enum name="END" value="2"/>
+        </attr>
+    </declare-styleable>
+
+
+    <declare-styleable name="BonitaRectDisplay">
         <attr name="maxWidth" format="dimension"/>
-        <attr name="source" format="reference"/>
+        <attr name="maxHeight" format="dimension"/>
+        <attr name="rectSourceImage" format="reference"/>
+
+        <attr name="LEFT_TOP_RADII" format="dimension"/>
+        <attr name="RIGHT_TOP_RADII" format="dimension"/>
+        <attr name="LEFT_BOTTOM_RADII" format="dimension"/>
+        <attr name="RIGHT_BOTTOM_RADII" format="dimension"/>
     </declare-styleable>
 
 

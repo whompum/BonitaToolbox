@@ -43,10 +43,6 @@ public class RectFactory {
     private Shape shape;
 
 
-    public RectFactory(){
-        throw new UnsupportedOperationException("Unsupported Method Stub");
-    }
-
 
     public RectFactory(final GeometryAssignments shapeAssigments){
         this.shapeAssigments = shapeAssigments;
