@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package toolbox.bonita.whompum.com.toolbox.BonitaImage;
+package java.BonitaDisplays;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
@@ -52,7 +52,7 @@ public class BonitaShapeDrawable extends ShapeDrawable {
 
         @Override
         public Shader resize(int i, int i1) {
-            Log.i(DEBUG, "RESIZE SHADER FACTORY");
+            Log.i(DEBUG, "RESIZE SHADER FACTORY NIGGA");
             BitmapShader shader = new BitmapShader(bitmap, Shader.TileMode.CLAMP, Shader.TileMode.CLAMP);
 
             shader.setLocalMatrix(matrix);
