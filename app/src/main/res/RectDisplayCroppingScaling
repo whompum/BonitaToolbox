@@ -1,0 +1,23 @@
+
+
+IF (bounds are equal (Wrap-Wrap) then do nothing
+
+ELSE
+-GOAL: Crop the Largest possible portion of the image that i can (So that it matches Aspect Ratio), then scale to fit boundaries
+-NOTE: Cache the cropped image for future uses
+
+PSUEDO:
+#Fetch Rects of both view and Image
+#Construct a Scale Rect
+#Find the aspect ratio value of the image (smallest side / largest side)
+#Using a boolean or aspect ratio enum, find the smallest side of the rect (enum = TALL/WIDE) (boolean = isWidthSmallest)
+#Set smallestDimen to 2 (for centering purposes) and largest to 2 / aspect ratio
+#Find which scaled view dimension has the closest distance to the images respective dimension (store in boolean isWidthClosestMatch)
+#set closest match equal to its respective view dimension
+#scale other dimension according to how it should be scaled. (other dimension (*/) ratio)
+#set width / height values of scaled rect
+#Center rect in the images rect
+#Give to Cropper
+#Crop
+#PROFIT???
+

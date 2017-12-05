@@ -1,4 +1,4 @@
-package toolbox.bonita.whompum.com.toolbox
+package toolbox.bonita.whompum.app.toolbox
 
 import org.junit.Test
 

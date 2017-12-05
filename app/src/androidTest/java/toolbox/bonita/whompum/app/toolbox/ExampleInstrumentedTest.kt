@@ -1,4 +1,4 @@
-package toolbox.bonita.whompum.com.toolbox
+package toolbox.bonita.whompum.app.toolbox
 
 import android.support.test.InstrumentationRegistry
 import android.support.test.runner.AndroidJUnit4

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="toolbox.bonita.whompum.com.toolbox">
+    package="com.whompum.bonitatoolbox.app">
 
     <application
         android:allowBackup="true"
@@ -11,7 +11,7 @@
 
 
 
-        <activity android:name=".ActivityMain">
+        <activity android:name="com.whompum.bonitatoolbox.app.ActivityMain">
             <intent-filter >
                 <category android:name="android.intent.category.LAUNCHER"/>
                 <action android:name="android.intent.action.MAIN"/>

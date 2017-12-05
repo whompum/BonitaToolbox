@@ -1,0 +1,86 @@
+FUNPOPUP
+
+
+-Displays a TextView with a shadowed background drawable that fades away after a specified time
+-"Pops up" at a given location; Lingers for a few seconds; Fades away.
+
+-MUST HAVES:
+--TextView / Background / Text
+
+-TextView
+--Can be either made through code, or given to this Popup
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+-------------------------------------------------[OLD]-----------------------------------------------------------------------------------------
+-FEATURES
+--Text is anchored with its coordinates being the tip of its arrow icon
+--Restart feature (If in the process of fading away, i can "bring it back to life" so to speak, instead of instantiating a brand new one.
+--Provides a simple API with static methods to easily create a new one via Method chaining. (builder pattern)
+  E.G. FunPopup.play(Context).content(View).styling(int).haveFun().duration(long);
+--Is shown for a specified duration then fades away for a specified duration
+--Can call a function to quickly fade away. Call: mom()
+
+
+
+-IMPORTANT
+--FunPopup will expose naturally named methods (launch() dismiss() show() etc etc)
+--The PlayRoom (FunPopups manager) will expose coolio named methods like play() mom() dad() etc etc that is essentially a Builder object
+
+-NOTE
+--Below are values entirely related to the functionality of FunPopup(TM) itself with NADA regard to the underlying Popup object.
+
+-Flow
+--When FunPopup is started it will create a new Handler() for itself, and when launched it will
+  Send a postDelayedMessage() to its runnable. The message is delayed for *duration*; When *duration* is up, the method will
+  send computed float values base on elapsed time, back to the Handler who will then set the alpha of FunPopups content; The Runnable
+  calls the handlers postDelayed message again, thus creating a loop of Handler - > Runnable - >Handler - > Runnable that only breaks
+  when an internal long value (elapsedTime) of the Runnable is equal to the given duration of the fade animation;
+
+-Can change duration while its displayed
+
+
+
+-NOTE
+--Below are values entirely related to the look of FunPopup(TM) itself with NADA regard to the Popup obj / Functionality
+
+-Changeable States
+--Background Color
+
+
+
+
+-NOTE
+--Below are values related entirely to the creation of FunPopup by a static source.
+
+-What it needs to work
+--*TextView
+--*TextView with a background
+--*Text for the TextView
+--*LingeringDuration
+--*FadeDuration
+--#launch function
+
+
+
+
+
+
+
+
+
+
+
