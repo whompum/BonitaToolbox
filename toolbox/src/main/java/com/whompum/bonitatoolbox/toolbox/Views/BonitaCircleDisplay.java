@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.whompum.bonitatoolbox.toolbox.widgets;
+package com.whompum.bonitatoolbox.toolbox.Views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -30,7 +30,6 @@ import android.view.View;
 
 import com.whompum.bonitatoolbox.toolbox.R;
 import com.whompum.bonitatoolbox.toolbox.Utils.ImageCrop;
-import com.whompum.bonitatoolbox.toolbox.widgets.BonitaShapeDrawable;
 
 /**
  * Created by bryan on 11/28/2017.
@@ -45,7 +44,7 @@ public class BonitaCircleDisplay extends View {
     private static final CropRegion DEF_CROP_REGION = CropRegion.CENTER;
 
 
-    @DrawableRes
+      @DrawableRes
     public static final int DEFAULT_IMAGE_RES = R.drawable.bitmap_default_image;
 
     //The wantedSize for the view to be
@@ -63,7 +62,6 @@ public class BonitaCircleDisplay extends View {
     private OvalShape backgroundShape = new OvalShape();
 
     private int maxWidth = Integer.MAX_VALUE;
-
 
 
     public BonitaCircleDisplay(final Context context){

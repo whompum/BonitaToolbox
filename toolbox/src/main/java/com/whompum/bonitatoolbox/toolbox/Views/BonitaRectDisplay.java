@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.whompum.bonitatoolbox.toolbox.widgets;
+package com.whompum.bonitatoolbox.toolbox.Views;
 
 import android.content.Context;
 import android.content.res.TypedArray;
@@ -29,10 +29,11 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
 
-import toolbox.bonita.whompum.app.toolbox.BonitaDisplays.Utils.ImageCrop;
-import toolbox.bonita.whompum.app.toolbox.BonitaDisplays.Utils.LogTags;
-import toolbox.bonita.whompum.app.toolbox.R;
-
+import com.whompum.bonitatoolbox.toolbox.R;
+import com.whompum.bonitatoolbox.toolbox.Utils.ImageCrop;
+import com.whompum.bonitatoolbox.toolbox.Utils.LogTags;
+import com.whompum.bonitatoolbox.toolbox.Views.RectFactory;
+import com.whompum.bonitatoolbox.toolbox.Views.BonitaShapeDrawable;
 
 /**
  * To future readers who think of me as dumb for writing two separate classes with almost exact near commonality:
@@ -158,10 +159,8 @@ public class BonitaRectDisplay extends View {
 
         this.background = new BonitaShapeDrawable(backgroundShape);
 
-        if(Build.VERSION.SDK_INT >= 16)
-            setBackground(background);
-        else
-            setBackgroundDrawable(background);
+        setBackground(background);
+
 
     }
 

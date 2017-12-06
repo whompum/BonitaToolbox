@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.whompum.bonitatoolbox.toolbox.widgets;
+package com.whompum.bonitatoolbox.toolbox.Views;
 
 import android.graphics.drawable.shapes.RectShape;
 import android.graphics.drawable.shapes.RoundRectShape;

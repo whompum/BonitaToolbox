@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package toolbox.bonita.whompum.app.toolbox.BonitaDisplays.widgets;
+package com.whompum.bonitatoolbox.toolbox.widgets;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
@@ -22,18 +22,22 @@ import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.DrawableRes;
+import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
 import android.support.annotation.StyleRes;
+import android.text.Layout;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import toolbox.bonita.whompum.app.toolbox.BonitaDisplays.Utils.LogTags;
-import toolbox.bonita.whompum.app.toolbox.R;
+import com.whompum.bonitatoolbox.toolbox.R;
+import com.whompum.bonitatoolbox.toolbox.Utils.LogTags;
+
 
 /**
  * Created by bryan on 12/2/2017.
@@ -45,13 +49,13 @@ public class FunPopup extends PopupWindow {
 
     public static final String MSG_IAE = "The TextView Has No Text :0";
 
-    public static final long DEF_DURATION = 5000L;
+    public static final long DEF_DURATION = 4000L;
     public static final long DEF_FADE_DURATION = 1000L;
 
     public static final int SIZE = ViewGroup.LayoutParams.WRAP_CONTENT;
 
-    @StyleRes
-    public static final int DEF_STYLE = R.style.ToolboxStyle; //CHANGE
+    @LayoutRes
+    public static final int CONTENT_ID = R.layout.fun_popup_textview;
 
     @DrawableRes
     public static final int BACKGROUND = R.drawable.oval_shadow;
@@ -65,6 +69,9 @@ public class FunPopup extends PopupWindow {
 
     private boolean hasStarted = false;
 
+
+    private TextView popup = null;
+
     /**
      * Bare-Bones constructor
      *
@@ -72,45 +79,30 @@ public class FunPopup extends PopupWindow {
      * @param msg CAN NOT BE NULL else the TextView will have no message to it
      */
     private FunPopup(final Context context, @NonNull final CharSequence msg){
-        this(context, DEF_STYLE, msg);
+        this(  (ViewGroup)LayoutInflater.from(context).inflate(CONTENT_ID, null, false)  , msg);
     }
 
-
-    /**
-     *
-     * Called when we're wanting to make a pure TextView in code
-     *
-     * @param context Used to inflate the TextView
-     * @param styleRes styling resource identification
-     * @param msg Message of this popup. CAN be null because text may have been specified in the styleRes resource
-     */
-    private FunPopup(final Context context, @StyleRes final int styleRes, @Nullable final CharSequence msg) {
-        this(new TextView(context, null, (styleRes == 0 ) ? DEF_STYLE : styleRes), msg);
-    }
 
     /**
      * Instantiate the Popup with an already styled TextView
      *
-     * @param popup The textview
+     * @param popupContent The textview
      * @param msg The messasge the display in the TextView; Be aware there exist a contract
      *            If the client passes null as the msg variable, that is legal PROVIDED
      *            the TextView already has text in it. Else if getText() and msg are null
      *            an exception will be thrown
      */
-    private FunPopup(final TextView popup, @Nullable final CharSequence msg){
-        super(popup);
+    private FunPopup(final ViewGroup popupContent, @Nullable final CharSequence msg){
+        super(popupContent, SIZE, SIZE);
+
+        final TextView content = popupContent.findViewById(R.id.popupTextView);
 
 
-        if(popup.getText() == null) //The TextView must have Text before being set as content view
-            if(msg != null)
-                popup.setText(msg);
-            else
-                throw new IllegalArgumentException(MSG_IAE);
+        if(msg != null)
+            content.setText(msg);
+        else
+            throw new IllegalArgumentException(MSG_IAE);
 
-        popup.setBackground(fetchDefaultBackground(popup.getContext()));
-
-
-        popup.setLayoutParams(new ViewGroup.LayoutParams(SIZE, SIZE));
 
         setOutsideTouchable(false);
         setTouchable(false);
@@ -120,7 +112,7 @@ public class FunPopup extends PopupWindow {
         setAttachedInDecor(true);
 
         setBackgroundDrawable(null);
-        setContentView(popup);
+
     }
 
 
@@ -144,9 +136,18 @@ public class FunPopup extends PopupWindow {
     protected void onStart(){
       this.fadeHandler =  new Handler(dad);
       this.fadeRunnable = new Fade(fadeDuration, fadeHandler);
-        fadeHandler.postDelayed(fadeRunnable, duration);
+           fadeHandler.postDelayed(fadeRunnable, duration);
 
-        hasStarted = true;
+           hasStarted = true;
+
+        Log.i(LogTags.ISSUES, "dad#FunPopup. POPUP IS SHOWING?: " + Boolean.valueOf(isShowing()));
+        Log.i(LogTags.ISSUES, "onStart()#FunPopup WIDTH: " + String.valueOf(getWidth()));
+        Log.i(LogTags.ISSUES, "onStart()#FunPopup HEIGHT: " + String.valueOf(getHeight()));
+
+        Log.i(LogTags.ISSUES, "onStart()#FunPopup Is Content Null: " + Boolean.valueOf(getContentView() == null));
+        Log.i(LogTags.ISSUES, "onStart()#FunPopup Content Width: " + String.valueOf(getContentView().getWidth()));
+        Log.i(LogTags.ISSUES, "onStart()#FunPopup Content Height: " + String.valueOf(getContentView().getHeight()));
+
     }
 
     /**
@@ -201,7 +202,7 @@ public class FunPopup extends PopupWindow {
 
 
     public void haveFun(final View parent, int gravity, int xLoc, int yLoc){
-        showAtLocation(parent, gravity, xLoc, yLoc);
+        super.showAtLocation(parent, gravity, xLoc, yLoc);
         this.onStart();
     }
 
@@ -218,16 +219,20 @@ public class FunPopup extends PopupWindow {
 
         Log.i(DEBUG, "SDK VERSION: " + String.valueOf(Build.VERSION.SDK_INT));
 
-        Drawable drawable = null;
 
-        if(Build.VERSION.SDK_INT >= 22)
-            context.getDrawable(BACKGROUND);
+        if(Build.VERSION.SDK_INT >= 22) {
+            final Drawable drawable = context.getDrawable(BACKGROUND);
+            Log.i(LogTags.ISSUES, "fetchDrawable()#FunPopup IS NULL?" + Boolean.valueOf(drawable == null));
+         return drawable;
+        }
 
-        else if(Build.VERSION.SDK_INT < 22)  //Deprecated after 22
-            context.getResources().getDrawable(BACKGROUND);
-
-
+        else if(Build.VERSION.SDK_INT < 22) {  //Deprecated after 22
+            final Drawable drawable = context.getResources().getDrawable(BACKGROUND);
+            Log.i(LogTags.ISSUES, "fetchDrawable()#FunPopup IS NULL?" + Boolean.valueOf(drawable == null));
         return drawable;
+        }
+
+        return null;
     }
 
 
@@ -237,6 +242,7 @@ public class FunPopup extends PopupWindow {
         public boolean handleMessage(Message message) {
             //Set the alpha value of content view to the compute view in the Handler
             FunPopup.this.getContentView().setAlpha((Float)message.obj);
+
             //Get the elapsed time (arg1) and check if equal to fadeDuration. If so, remove the runnable callback, and kill
             if(message.arg1 == fadeDuration){
                 fadeHandler.removeCallbacks(fadeRunnable);
@@ -272,77 +278,6 @@ public class FunPopup extends PopupWindow {
 
 
     /**
-     * The client brought their own TextView to the party and wants to use it
-     * The msg can be null because their TextView may have a Text on it. If not
-     * and they still passed null as the msg, then an exception will be raised. That's good behavior. Good boy, FunPopup.
-     *
-     * @param contentView User defined ContentView
-     * @param msg contentView's message, or null if it already has one
-     * @return *sigh* funPopup again....
-     */
-    public static FunPopup play(@NonNull final TextView contentView, @Nullable final CharSequence msg){
-        return new FunPopup(contentView, msg);
-    }
-
-
-    /**
-     * Utility method of play(TextView, CharSequence)
-     *
-     * The user wants to use their own TextView, HOWEVER they also wanted to use a String Resource
-     *
-     * @param contentView User defined TextView
-     * @param msgId R.string
-     * @return FUN-F****** POPUP!
-     */
-    public static FunPopup play(@NonNull final TextView contentView, @StringRes final int msgId){
-        return play(contentView, resolveStringResource(contentView.getContext(), msgId));
-    }
-
-
-    /**
-     *
-     * This method is used when there's a Style, that they want to apply to the TextView
-     * NOTE: A textview can only be given a style at instantiation time so this assumes
-     * they didn't already have a TextView to use. mmmkay
-     *
-     * PLEASE NOTE: This method assumes a text resource is provided in the style resource
-     *
-     * @param context Context used by the Popup
-     * @param styleRes Styling resource used by the Popups TextView
-     * @return A newly made FunPopup !
-     */
-    public static FunPopup play(@NonNull final Context context, @StyleRes Integer styleRes){
-        return play(context, styleRes, null);
-    }
-
-
-    /**
-     * This method is used when the client wants to apply a custom style to the FunPopup, CAN pass null
-     * if your style has its own message
-     *
-     * @param context Used to inflate views and stuff
-     * @param styleRes reference to the styling they want applied to the textView
-     * @param msg Text to display
-     * @return a FunPopup object
-     */
-    public static FunPopup play(@NonNull final Context context, @StyleRes final Integer styleRes, final CharSequence msg){
-        return new FunPopup(context, styleRes, msg);
-    }
-
-    /**
-     * Called when the client wants to instance a new FunPopup with a specific style, using a string from a resource
-     *  UTILITY method btw
-     *
-     * @param context inflates stuff
-     * @param styleRes styles things
-     * @param msgId says stuff
-     * @return the thing we're doing all of this for
-     */
-    public static FunPopup play(@NonNull final Context context, @StyleRes final Integer styleRes, @StringRes final int msgId){
-        return play(context, styleRes, resolveStringResource(context, msgId));
-    }
-
-    /**
      * Utility method to resolve a String resource and convert to a CharSequence :)
      * @param context used to generate the string from the R.* file
      * @param id the R resource id
@@ -361,26 +296,26 @@ public class FunPopup extends PopupWindow {
 
         public static final String DEBUG = "Fade";
 
-        private static final long CYCLE = 100L; //Every 100 MS deliver an updated value to handler
+        public static final long FADE_DURATION_DEF = 500;
+
+        private static final long CYCLE = 50L; //Every 100 MS deliver an updated value to handler
 
         private static final float VALUE = 1.0F;
 
-        private long fadeDuration = 1000L;
+        private long fadeDuration = FADE_DURATION_DEF;
         private long elapsedTime = 0L;
 
         private Handler handler;
 
-        private Message message = new Message();
-
         private Float value = VALUE;
 
         /**
-         *
+         *TODO clean up the fadeDuration construction logic...
          * @param fadeDuration How long the anim should last
          * @param handler The handler that started it
          */
         private Fade(final long fadeDuration, @NonNull  final Handler handler){
-            if(fadeDuration > 1000 & (fadeDuration % CYCLE != 0) ) //If less than 1 second, and not a perfect divisor for 100, don't set it
+            if(fadeDuration > 500 & (fadeDuration % CYCLE != 0) ) //If less than 1 second, and not a perfect divisor for 100, don't set it
             this.fadeDuration = fadeDuration;
             else
                 Log.i(LogTags.NOTIFICATIONS,"Fade-IMPL @ class FunPopup: \n" +
@@ -395,6 +330,7 @@ public class FunPopup extends PopupWindow {
             //Increment elapsed time by CYCLE
             elapsedTime += CYCLE;
 
+            final Message message = new Message();
 
             computeValue();
 

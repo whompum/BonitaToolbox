@@ -2,6 +2,6 @@
 <resources>
 
     <item name="contentDrawable" type="id"/>
-
+    <item name="popupTextView" type="id"/>
 
 </resources>
