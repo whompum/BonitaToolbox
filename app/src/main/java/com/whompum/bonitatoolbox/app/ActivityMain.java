@@ -20,10 +20,10 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.view.Gravity;
+import android.view.View;
 
-import toolbox.bonita.whompum.app.toolbox.BonitaDisplays.BonitaCircleDisplay;
-
-import toolbox.bonita.whompum.app.toolbox.BonitaDisplays.widgets.FunPopup;
+import com.whompum.bonitatoolbox.toolbox.Views.BonitaCircleDisplay;
+import com.whompum.bonitatoolbox.toolbox.widgets.FunPopup;
 
 
 /**
@@ -39,10 +39,16 @@ public class ActivityMain extends AppCompatActivity {
         setContentView(R.layout.layout_main);
 
 
-        BonitaCircleDisplay circleDisplay = (BonitaCircleDisplay) findViewById(R.id.circle);
+        final BonitaCircleDisplay circle = findViewById(R.id.circle);
+        circle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
-        FunPopup.play(this, "TESTING OUT the new popup MAHNNNN").haveFun(circleDisplay, Gravity.NO_GRAVITY, 100, 100);
+                FunPopup.play(ActivityMain.this, "HELLO, WORLD!")
+                        .haveFun(circle, Gravity.NO_GRAVITY, (int)(view.getX()),(int)(view.getY()+ (view.getHeight())) );
+            }
 
+        });
     }
 
 
