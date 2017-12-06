@@ -17,18 +17,15 @@
 package com.whompum.bonitatoolbox.toolbox.widgets;
 
 import android.content.Context;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.DrawableRes;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.annotation.StringRes;
-import android.support.annotation.StyleRes;
-import android.text.Layout;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -57,8 +54,6 @@ public class FunPopup extends PopupWindow {
     @LayoutRes
     public static final int CONTENT_ID = R.layout.fun_popup_textview;
 
-    @DrawableRes
-    public static final int BACKGROUND = R.drawable.oval_shadow;
 
     private long duration = DEF_DURATION;
     private long fadeDuration = DEF_FADE_DURATION;
@@ -68,9 +63,8 @@ public class FunPopup extends PopupWindow {
     private Runnable fadeRunnable = null;
 
     private boolean hasStarted = false;
+    private boolean hasEnded = false;
 
-
-    private TextView popup = null;
 
     /**
      * Bare-Bones constructor
@@ -134,27 +128,25 @@ public class FunPopup extends PopupWindow {
      * after duration is delayed.
      */
     protected void onStart(){
+
+      if(hasEnded) //Used when onKill() is called, but i want to re-show this
+        bringMeBackToLife();
+
       this.fadeHandler =  new Handler(dad);
       this.fadeRunnable = new Fade(fadeDuration, fadeHandler);
            fadeHandler.postDelayed(fadeRunnable, duration);
 
            hasStarted = true;
-
-        Log.i(LogTags.ISSUES, "dad#FunPopup. POPUP IS SHOWING?: " + Boolean.valueOf(isShowing()));
-        Log.i(LogTags.ISSUES, "onStart()#FunPopup WIDTH: " + String.valueOf(getWidth()));
-        Log.i(LogTags.ISSUES, "onStart()#FunPopup HEIGHT: " + String.valueOf(getHeight()));
-
-        Log.i(LogTags.ISSUES, "onStart()#FunPopup Is Content Null: " + Boolean.valueOf(getContentView() == null));
-        Log.i(LogTags.ISSUES, "onStart()#FunPopup Content Width: " + String.valueOf(getContentView().getWidth()));
-        Log.i(LogTags.ISSUES, "onStart()#FunPopup Content Height: " + String.valueOf(getContentView().getHeight()));
-
+           hasEnded = false;
     }
 
     /**
      * LIFECYCLE
+     *
+     * TODO: FIX. DOESN'T WORK RIGHT! onRestart()#FunPopup.class
      */
     protected void onRestart(){
-        getContentView().setAlpha(Fade.VALUE);
+        bringMeBackToLife();
         onStart();
     }
 
@@ -163,11 +155,21 @@ public class FunPopup extends PopupWindow {
      * LIFECYCLE
      */
     protected void onKill(){
-        //TODO Fade out the animation
+        endFade();
+        hasEnded = true;
+        hasStarted = false;
         dismiss();
     }
 
 
+    private void bringMeBackToLife(){
+        if(getContentView()!= null)
+            getContentView().setAlpha(Fade.VALUE);
+    }
+
+    private void endFade(){
+        this.fadeHandler.removeCallbacks(fadeRunnable);
+    }
 
 
 
@@ -178,6 +180,8 @@ public class FunPopup extends PopupWindow {
     public void killFun(){
         onKill();
     }
+
+
 
     public FunPopup setLingerDuration(final long duration){
 
@@ -200,40 +204,27 @@ public class FunPopup extends PopupWindow {
     return this;
     }
 
+    public void haveFun(final View parent){
+        this.haveFun(parent, Gravity.NO_GRAVITY);
+    }
 
-    public void haveFun(final View parent, int gravity, int xLoc, int yLoc){
+    public void haveFun(final View parent, int gravity, int xOffset, int yOffset){
+
+        final int xLoc = (int)parent.getX() + xOffset;
+        final int yLoc = (int)parent.getY() + yOffset;
+
         super.showAtLocation(parent, gravity, xLoc, yLoc);
         this.onStart();
     }
 
-
-
-
-
-    /**
-     * Utility helper method to fetch a Drawable on different API levels
-     * @param context Inflates Drawable objects
-     * @return the inflated Drawable
-     */
-    private Drawable fetchDefaultBackground(final Context context){
-
-        Log.i(DEBUG, "SDK VERSION: " + String.valueOf(Build.VERSION.SDK_INT));
-
-
-        if(Build.VERSION.SDK_INT >= 22) {
-            final Drawable drawable = context.getDrawable(BACKGROUND);
-            Log.i(LogTags.ISSUES, "fetchDrawable()#FunPopup IS NULL?" + Boolean.valueOf(drawable == null));
-         return drawable;
-        }
-
-        else if(Build.VERSION.SDK_INT < 22) {  //Deprecated after 22
-            final Drawable drawable = context.getResources().getDrawable(BACKGROUND);
-            Log.i(LogTags.ISSUES, "fetchDrawable()#FunPopup IS NULL?" + Boolean.valueOf(drawable == null));
-        return drawable;
-        }
-
-        return null;
+    public void haveFun(final View parent, int gravity){
+        this.haveFun(parent, gravity, 0,0);
     }
+
+    public void haveFun(final View parent, int xOffset, int yOffset){
+        this.haveFun(parent, Gravity.NO_GRAVITY, xOffset, yOffset);
+    }
+
 
 
 
@@ -245,8 +236,8 @@ public class FunPopup extends PopupWindow {
 
             //Get the elapsed time (arg1) and check if equal to fadeDuration. If so, remove the runnable callback, and kill
             if(message.arg1 == fadeDuration){
-                fadeHandler.removeCallbacks(fadeRunnable);
-                //Kill object as well
+                onKill();
+                return true;
             }
             return true;
         }
@@ -310,17 +301,18 @@ public class FunPopup extends PopupWindow {
         private Float value = VALUE;
 
         /**
-         *TODO clean up the fadeDuration construction logic...
+         *
          * @param fadeDuration How long the anim should last
          * @param handler The handler that started it
          */
         private Fade(final long fadeDuration, @NonNull  final Handler handler){
-            if(fadeDuration > 500 & (fadeDuration % CYCLE != 0) ) //If less than 1 second, and not a perfect divisor for 100, don't set it
-            this.fadeDuration = fadeDuration;
-            else
+            if((fadeDuration % CYCLE != 0) ) //If not a perfect divisor for 100, don't set it
                 Log.i(LogTags.NOTIFICATIONS,"Fade-IMPL @ class FunPopup: \n" +
                                                  "Fade Duration must be greater than a 1000 with 100 evenly dividing into it. \n" +
                                                  "Fade Duration: " + String.valueOf(fadeDuration));
+            else
+            this.fadeDuration = fadeDuration;
+
 
             this.handler = handler;
         }
@@ -358,20 +350,7 @@ public class FunPopup extends PopupWindow {
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-    }
+}
 
 
 
