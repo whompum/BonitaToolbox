@@ -41,6 +41,7 @@ public class TimelessWaveAnimation extends View {
 
     {
         Log.i(DEBUG, "hi");
+        initBackground();
     }
 
 
@@ -50,17 +51,15 @@ public class TimelessWaveAnimation extends View {
 
     public TimelessWaveAnimation(final Context context){
         super(context);
-        initBackground();
     }
 
     public TimelessWaveAnimation(final Context context, final AttributeSet set){
         super(context, set);
-        initBackground();
+
     }
 
     public TimelessWaveAnimation(final Context context, final AttributeSet set, final int defStyle){
         super(context, set, defStyle);
-        initBackground();
     }
 
     private void initBackground(){

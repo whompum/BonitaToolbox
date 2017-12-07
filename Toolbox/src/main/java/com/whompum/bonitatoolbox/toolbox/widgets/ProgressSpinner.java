@@ -22,6 +22,7 @@ import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 
 import com.whompum.bonitatoolbox.toolbox.R;
@@ -38,21 +39,25 @@ public class ProgressSpinner extends View {
     @DrawableRes
     private static final int BACKGROUND_ID = R.drawable.progress_spin_animation;
 
+
+
+    {
+        Log.i(DEBUG, "hi");
+        initBackground();
+    }
+
     public ProgressSpinner(Context context) {
         super(context);
-        initBackground();
     }
 
 
     public ProgressSpinner(Context context, @Nullable AttributeSet attrs) {
         super(context, attrs);
-        initBackground();
     }
 
 
     public ProgressSpinner(Context context, @Nullable AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        initBackground();
     }
 
 

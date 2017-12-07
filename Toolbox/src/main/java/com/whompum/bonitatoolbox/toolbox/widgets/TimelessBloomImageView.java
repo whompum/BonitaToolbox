@@ -62,6 +62,7 @@ public class TimelessBloomImageView extends AppCompatImageView {
     private int cX = 0;
     private int cY = 0;
 
+
     public TimelessBloomImageView(final Context context){
         super(context);
         initBackground();
@@ -70,14 +71,14 @@ public class TimelessBloomImageView extends AppCompatImageView {
 
     public TimelessBloomImageView(final Context context, final AttributeSet set){
         super(context, set);
-        initAnimator();
         initBackground();
+        initAnimator();
     }
 
     public TimelessBloomImageView(final Context context, final AttributeSet set, final int defStyleAttr){
         super(context, set, defStyleAttr);
-        initAnimator();
         initBackground();
+        initAnimator();
     }
 
     private void initAnimator(){
