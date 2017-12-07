@@ -19,26 +19,48 @@ package com.whompum.bonitatoolbox.toolbox.widgets;
 import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.DrawableRes;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.view.View;
 import android.widget.ImageView;
+
+import com.whompum.bonitatoolbox.toolbox.R;
 
 /**
  * Created by bryan on 12/6/2017.
  */
 
-public class TimelessAnimation extends AppCompatImageView {
+public class TimelessWaveAnimation extends View {
 
     public static final String BG_IAE = "Background must be an instance of AnimationDrawable";
 
-    public TimelessAnimation(final Context context, final AttributeSet set){
+    @DrawableRes
+    private static final int BACKGROUND_ID = R.drawable.timeless_wave_animation;
+
+    public TimelessWaveAnimation(final Context context){
+        super(context);
+        initBackground();
+    }
+
+    public TimelessWaveAnimation(final Context context, final AttributeSet set){
         super(context, set);
+        initBackground();
     }
 
-    public TimelessAnimation(final Context context, final AttributeSet set, final int defStyle){
+    public TimelessWaveAnimation(final Context context, final AttributeSet set, final int defStyle){
         super(context, set, defStyle);
+        initBackground();
     }
 
+    private void initBackground(){
+
+        if(Build.VERSION.SDK_INT >= 21)
+            setBackground(getContext().getDrawable(BACKGROUND_ID));
+        else
+            setBackground(getContext().getResources().getDrawable(BACKGROUND_ID));
+    }
 
     public void start(){
         final Drawable background = getBackground();
