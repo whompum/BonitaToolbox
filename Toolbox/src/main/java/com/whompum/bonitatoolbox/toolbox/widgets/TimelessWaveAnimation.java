@@ -23,6 +23,7 @@ import android.os.Build;
 import android.support.annotation.DrawableRes;
 import android.support.v7.widget.AppCompatImageView;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 
@@ -34,7 +35,15 @@ import com.whompum.bonitatoolbox.toolbox.R;
 
 public class TimelessWaveAnimation extends View {
 
-    public static final String BG_IAE = "Background must be an instance of AnimationDrawable";
+
+    public static final String DEBUG = "TimelessWaveAnimation";
+
+
+    {
+        Log.i(DEBUG, "hi");
+    }
+
+
 
     @DrawableRes
     private static final int BACKGROUND_ID = R.drawable.timeless_wave_animation;
@@ -63,25 +72,35 @@ public class TimelessWaveAnimation extends View {
     }
 
     public void start(){
-        final Drawable background = getBackground();
-
-
-        if( !(background instanceof AnimationDrawable) )
-            throw new IllegalArgumentException("Background mus");
-
-        else
-            ((AnimationDrawable)background).start();
+          ((AnimationDrawable)getBackground()).start();
     }
 
     public void stop(){
-        final Drawable background = getBackground();
-
-
-        if( !(background instanceof AnimationDrawable) )
-            throw new IllegalArgumentException("Background mus");
-
-        else
-            ((AnimationDrawable)background).stop();
+        ((AnimationDrawable)getBackground()).stop();
     }
 
+
+    /**
+     * Since we add the drawable progmatically, the size of the view can't be determined
+     * Thus if we pass wrap_content, it will take up all the size it can (we're extending view thats why)
+     * To get around this, we simply fetch the wanted size of the Drawable,
+     * and pass that to the super implementation along with the clients LayoutParams mode
+     * passing along these values is better than setting them ourselves because we can
+     * let the view handle padding and what not
+     *
+     * @param widthMeasureSpec holds the LayoutParams mode we wanted
+     * @param heightMeasureSpec holds the LayoutParams mode we wanted
+     */
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+
+        final int width = getBackground().getIntrinsicWidth();
+        final int height = getBackground().getIntrinsicHeight();
+
+        final int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        final int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+
+        super.onMeasure(MeasureSpec.makeMeasureSpec(width, widthMode), MeasureSpec.makeMeasureSpec(height, heightMode));
+
+    }
 }

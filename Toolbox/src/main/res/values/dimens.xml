@@ -6,6 +6,8 @@
     <fraction name="maxWidth">60%</fraction>
 
     <dimen name="circleWaveSize">10dp</dimen>
-
     <dimen name="circleWaveYOffsetBase">4dp</dimen>
+    <!--WAVE WIDTH/HEIGHT NEEDED HERE SO THEY CAN BE SET IN CODE -->
+    <dimen name="circleWaveWidth">36dp</dimen>
+    <dimen name="circleWaveHeight">22dp</dimen>
 </resources>
