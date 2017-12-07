@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:background="#a92349"
+    android:padding="16dp"
+    android:layout_height="match_parent">
+
+
+    <com.whompum.bonitatoolbox.toolbox.Views.BonitaCircleDisplay
+        android:layout_gravity="center"
+        android:id="@+id/circle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+
+    <com.whompum.bonitatoolbox.toolbox.widgets.TimelessWaveAnimation
+        android:id="@+id/timelessWave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.whompum.bonitatoolbox.toolbox.widgets.ProgressSpinner
+        android:id="@+id/progressSpin"
+        android:layout_gravity="center_horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
+    <com.whompum.bonitatoolbox.toolbox.widgets.TimelessBloomImageView
+        android:layout_gravity="center_horizontal|bottom"
+        android:id="@+id/timelessBloom"
+        android:layout_width="76dp"
+        android:layout_height="76dp" />
+
+
+</FrameLayout>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
