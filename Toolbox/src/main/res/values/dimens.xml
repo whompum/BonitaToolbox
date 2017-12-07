@@ -5,4 +5,7 @@
 
     <fraction name="maxWidth">60%</fraction>
 
+    <dimen name="circleWaveSize">10dp</dimen>
+
+    <dimen name="circleWaveYOffsetBase">4dp</dimen>
 </resources>

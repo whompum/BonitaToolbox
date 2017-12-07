@@ -3,7 +3,7 @@
 
     <!--
       TOTAL WIDTH FOR THIS DRAWABLES VIEW IS 36DP
-      TOTAL HEIGHT FOR THIS DRAWABLES VIEW IS 18DP
+      TOTAL HEIGHT FOR THIS DRAWABLES VIEW IS 22DP
 
       FOR ANY POSITIONING USE DP VALUES. NOT GRAVITY. PORQUE?
       Because gravity doesn't provide definite values to a drawable
@@ -20,21 +20,21 @@
       2DP from the right.
     -->
     <item android:drawable="@drawable/circle"
-          android:left="0dp" android:top="4dp"
-          android:right="26dp" android:bottom="4dp"/>
+          android:left="0dp" android:top="6dp"
+          android:right="26dp" android:bottom="6dp"/>
 
     <item android:drawable="@drawable/circle"
-          android:left="13dp" android:top="4dp"
-          android:right="13dp" android:bottom="4dp"/>
+          android:left="13dp" android:top="6dp"
+          android:right="13dp" android:bottom="6dp"/>
 
     <item android:drawable="@drawable/circle"
           android:left="26dp" android:right="0dp"
-          android:top="4dp" android:bottom="4dp"/>
+          android:top="6dp" android:bottom="6dp"/>
 
     <item>
         <shape android:shape="rectangle">
             <size android:width="0dp"
-                  android:height="0dp"/>
+                  android:height="16dp"/>
         </shape>
     </item>
 

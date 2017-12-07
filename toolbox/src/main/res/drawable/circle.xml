@@ -3,6 +3,6 @@
     android:shape="oval">
 
     <solid android:color="@color/color_blue"/>
-    <size android:width="10dp" android:height="10dp"/>
+    <size android:width="@dimen/circleWaveSize" android:height="@dimen/circleWaveSize" />
 
 </shape>
