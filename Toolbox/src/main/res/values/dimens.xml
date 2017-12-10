@@ -13,7 +13,7 @@
     <!--OFFSETS-->
     <dimen name="hor_micro">6dp</dimen>
     <dimen name="hor_small">12dp</dimen>
-    <dimen name="hor_medium">24dp/</dimen>
+    <dimen name="hor_medium">24dp</dimen>
     <dimen name="hor_large">48dp</dimen>
     <dimen name="hor_xLarge">96dp</dimen>
 
