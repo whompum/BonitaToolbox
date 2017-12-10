@@ -1,9 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <dimen name="cornerRadius">15dp</dimen>
-
     <fraction name="maxWidth">60%</fraction>
 
     <dimen name="circleWaveSize">10dp</dimen>
     <dimen name="circleWaveYOffsetBase">4dp</dimen>
+
+    <!--CHANGE BELOW AS NEEDED,--> 
+    <!--BUT CHANGE IN Styling branch only!-->
+    <!--This is the central branch for any and all styling (Sizes / colors / strings) -->
+
+    <!--OFFSETS-->
+    <dimen name="hor_micro">6dp</dimen>
+    <dimen name="hor_small">12dp</dimen>
+    <dimen name="hor_medium">24dp/</dimen>
+    <dimen name="hor_large">48dp</dimen>
+    <dimen name="hor_xLarge">96dp</dimen>
+
+    <dimen name="ver_micro">8dp</dimen>
+    <dimen name="ver_small">16dp</dimen>
+    <dimen name="ver_medium">32dp</dimen>
+    <dimen name="ver_large">64dp</dimen>
+    <dimen name="ver_xLarge">128dp</dimen>
+
+    <!--WIDGET SIZING-->
+    <dimen name="timeless_wave_width">36dp</dimen>
+    <dimen name="timeless_wave_height">18dp</dimen>
+    <dimen name="timeless_bloom_size">36dp</dimen>
+    <dimen name="progress_spin_size">26dp</dimen>
+
+    <!--FONT SIZES-->
+    <dimen name="text_micro">12sp</dimen>
+    <dimen name="text_small">14sp</dimen>
+    <dimen name="text_base">16sp</dimen>
+    <dimen name="text_medium">20sp</dimen>
+    <dimen name="text_large">24sp</dimen>
+
+    <!--ICON SIZES-->
+    <dimen name="ic_micro">16dp</dimen>
+    <dimen name="ic_small">28dp</dimen>
+    <dimen name="ic_normal">36dp</dimen>
+
+    <!--FAB SIZE-->
+    <dimen name="fab_micro">36dp</dimen>
+    <dimen name="fab_small">48dp</dimen>
+    <dimen name="fab_normal">56dp</dimen>
 </resources>
