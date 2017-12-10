@@ -33,6 +33,11 @@ public class ImageCrop {
 
     public static final Bitmap.Config DEFAULT_CONFIG = Bitmap.Config.ARGB_8888;
 
+
+    public ImageCrop(){
+
+    }
+
     /**
      *
      * @param croppable The bitmap i want to crop and return a portion of
