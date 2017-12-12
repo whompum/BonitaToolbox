@@ -17,6 +17,8 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
 
+group = "com.whompum.bonita"
+
 android {
     compileSdkVersion 26
 
