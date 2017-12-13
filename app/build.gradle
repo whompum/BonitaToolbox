@@ -31,6 +31,4 @@ dependencies {
     implementation project(':Toolbox')
 
 }
-repositories {
-    mavenCentral()
-}
+
